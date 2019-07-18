@@ -1,0 +1,2 @@
+# SVModManager
+しゃどばすMODマネージャー
