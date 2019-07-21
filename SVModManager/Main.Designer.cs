@@ -38,6 +38,9 @@
             this.modDeleteButton = new System.Windows.Forms.Button();
             this.upButton = new System.Windows.Forms.Button();
             this.downButton = new System.Windows.Forms.Button();
+            this.backUpButton = new System.Windows.Forms.Button();
+            this.applyButton = new System.Windows.Forms.Button();
+            this.restoreButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // modListView
@@ -76,26 +79,25 @@
             // 
             this.gameFolderButton.Location = new System.Drawing.Point(522, 12);
             this.gameFolderButton.Name = "gameFolderButton";
-            this.gameFolderButton.Size = new System.Drawing.Size(110, 25);
+            this.gameFolderButton.Size = new System.Drawing.Size(110, 23);
             this.gameFolderButton.TabIndex = 2;
-            this.gameFolderButton.Text = "適用先フォルダ指定";
+            this.gameFolderButton.Text = "Mod適用先フォルダ";
             this.gameFolderButton.UseVisualStyleBackColor = true;
             this.gameFolderButton.Click += new System.EventHandler(this.GameFolderButton_Click);
             // 
             // gameFolder
             // 
-            this.gameFolder.Location = new System.Drawing.Point(522, 45);
+            this.gameFolder.Location = new System.Drawing.Point(522, 41);
             this.gameFolder.Name = "gameFolder";
             this.gameFolder.ReadOnly = true;
-            this.gameFolder.Size = new System.Drawing.Size(300, 19);
+            this.gameFolder.Size = new System.Drawing.Size(110, 19);
             this.gameFolder.TabIndex = 3;
-            this.gameFolder.Text = "Modを適用するフォルダを指定してください。";
             // 
             // modAddButton
             // 
-            this.modAddButton.Location = new System.Drawing.Point(522, 70);
+            this.modAddButton.Location = new System.Drawing.Point(522, 124);
             this.modAddButton.Name = "modAddButton";
-            this.modAddButton.Size = new System.Drawing.Size(75, 23);
+            this.modAddButton.Size = new System.Drawing.Size(110, 23);
             this.modAddButton.TabIndex = 4;
             this.modAddButton.Text = "Mod追加";
             this.modAddButton.UseVisualStyleBackColor = true;
@@ -103,9 +105,9 @@
             // 
             // modDeleteButton
             // 
-            this.modDeleteButton.Location = new System.Drawing.Point(522, 99);
+            this.modDeleteButton.Location = new System.Drawing.Point(522, 153);
             this.modDeleteButton.Name = "modDeleteButton";
-            this.modDeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.modDeleteButton.Size = new System.Drawing.Size(110, 23);
             this.modDeleteButton.TabIndex = 5;
             this.modDeleteButton.Text = "Mod削除";
             this.modDeleteButton.UseVisualStyleBackColor = true;
@@ -113,29 +115,62 @@
             // 
             // upButton
             // 
-            this.upButton.Location = new System.Drawing.Point(522, 270);
+            this.upButton.Location = new System.Drawing.Point(522, 182);
             this.upButton.Name = "upButton";
             this.upButton.Size = new System.Drawing.Size(35, 25);
             this.upButton.TabIndex = 6;
-            this.upButton.Text = "↑";
+            this.upButton.Text = "▲";
             this.upButton.UseVisualStyleBackColor = true;
             this.upButton.Click += new System.EventHandler(this.UpButton_Click);
             // 
             // downButton
             // 
-            this.downButton.Location = new System.Drawing.Point(522, 301);
+            this.downButton.Location = new System.Drawing.Point(522, 213);
             this.downButton.Name = "downButton";
             this.downButton.Size = new System.Drawing.Size(35, 25);
             this.downButton.TabIndex = 7;
-            this.downButton.Text = "↓";
+            this.downButton.Text = "▼";
             this.downButton.UseVisualStyleBackColor = true;
             this.downButton.Click += new System.EventHandler(this.DownButton_Click);
+            // 
+            // backUpButton
+            // 
+            this.backUpButton.Location = new System.Drawing.Point(522, 66);
+            this.backUpButton.Name = "backUpButton";
+            this.backUpButton.Size = new System.Drawing.Size(110, 23);
+            this.backUpButton.TabIndex = 8;
+            this.backUpButton.Text = "バックアップ生成";
+            this.backUpButton.UseVisualStyleBackColor = true;
+            this.backUpButton.Click += new System.EventHandler(this.BackUpButton_Click);
+            // 
+            // applyButton
+            // 
+            this.applyButton.Location = new System.Drawing.Point(522, 301);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(110, 23);
+            this.applyButton.TabIndex = 9;
+            this.applyButton.Text = "適用";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
+            // 
+            // restoreButton
+            // 
+            this.restoreButton.Location = new System.Drawing.Point(522, 95);
+            this.restoreButton.Name = "restoreButton";
+            this.restoreButton.Size = new System.Drawing.Size(110, 23);
+            this.restoreButton.TabIndex = 10;
+            this.restoreButton.Text = "復元";
+            this.restoreButton.UseVisualStyleBackColor = true;
+            this.restoreButton.Click += new System.EventHandler(this.RestoreButton_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(834, 336);
+            this.ClientSize = new System.Drawing.Size(650, 336);
+            this.Controls.Add(this.restoreButton);
+            this.Controls.Add(this.applyButton);
+            this.Controls.Add(this.backUpButton);
             this.Controls.Add(this.downButton);
             this.Controls.Add(this.upButton);
             this.Controls.Add(this.modDeleteButton);
@@ -145,6 +180,7 @@
             this.Controls.Add(this.modListView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SVModManager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             this.Load += new System.EventHandler(this.Main_Load);
@@ -164,6 +200,9 @@
         private System.Windows.Forms.ColumnHeader ModFolder;
         private System.Windows.Forms.Button upButton;
         private System.Windows.Forms.Button downButton;
+        private System.Windows.Forms.Button backUpButton;
+        private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.Button restoreButton;
     }
 }
 

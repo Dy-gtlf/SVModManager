@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.FileIO;
 
 namespace SVModManager
 {
@@ -81,16 +83,24 @@ namespace SVModManager
         private void ModAddButton_Click(object sender, EventArgs e)
         {
             var newModInfo = ModInfoForm.ShowModInfoForm();
-            string[] info = { "", newModInfo.ModName, newModInfo.ModFolder };
-            var item = new ListViewItem(info);
-            modListView.Items.Add(item);
+            if (newModInfo != null)
+            {
+                string[] info = { "", newModInfo.ModName, newModInfo.ModFolder };
+                var item = new ListViewItem(info);
+                modListView.Items.Add(item);
+            }
         }
 
         private void ModDeleteButton_Click(object sender, EventArgs e)
         {
             if (modListView.SelectedItems.Count == 1)
             {
-                modListView.Items.Remove(modListView.SelectedItems[0]);
+                var item = modListView.SelectedItems[0];
+                var res = MessageBox.Show($"{item.SubItems[1].Text} を削除しますか?", "確認", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (res == DialogResult.OK)
+                {
+                    modListView.Items.Remove(modListView.SelectedItems[0]);
+                }
             }
         }
 
@@ -128,6 +138,60 @@ namespace SVModManager
             modListView.Items.Insert(pos, item);
             modListView.Items[pos].Selected = true;
             modListView.Focus();
+        }
+
+        private void BackUpButton_Click(object sender, EventArgs e)
+        {
+            var res = MessageBox.Show("現在の状態のバックアップを作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.Yes && gameFolder.Text != "")
+            {
+                try
+                {
+                    var dir = gameFolder.Text;
+                    var backUpDir = $@"backup\{DateTime.Now.ToString("yyyyMMddHHmmss")}";
+                    FileSystem.CopyDirectory(dir, backUpDir, UIOption.AllDialogs);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+        }
+
+        private void RestoreButton_Click(object sender, EventArgs e)
+        {
+            // フォルダ選択ダイアログを表示
+            var fbd = new FolderBrowserDialog
+            {
+                Description = "バックアップフォルダを指定してください。",
+                RootFolder = Environment.SpecialFolder.Desktop,
+                SelectedPath = Directory.GetCurrentDirectory() + @"\backup",
+                ShowNewFolderButton = false
+            };
+            if (fbd.ShowDialog(this) == DialogResult.OK)
+            {
+                var backUpDir = fbd.SelectedPath;
+                var res = MessageBox.Show("バックアップから復元しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes && gameFolder.Text != "")
+                {
+                    try
+                    {
+                        var dir = gameFolder.Text;
+                        FileSystem.CopyDirectory(backUpDir, dir, UIOption.AllDialogs);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void ApplyButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -102,7 +102,9 @@
             this.Controls.Add(this.modName);
             this.Controls.Add(this.modFolder);
             this.Controls.Add(this.modFolderButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ModInfoForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mod情報";
             this.ResumeLayout(false);
             this.PerformLayout();
