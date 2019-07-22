@@ -142,7 +142,7 @@ namespace SVModManager
 
         private void BackUpButton_Click(object sender, EventArgs e)
         {
-            var res = MessageBox.Show("現在の状態のバックアップを作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var res = MessageBox.Show("現在の状態のバックアップを作成しますか?", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes && gameFolder.Text != "")
             {
                 try
@@ -172,7 +172,7 @@ namespace SVModManager
             if (fbd.ShowDialog(this) == DialogResult.OK)
             {
                 var backUpDir = fbd.SelectedPath;
-                var res = MessageBox.Show("バックアップから復元しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var res = MessageBox.Show("バックアップから復元しますか?", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes && gameFolder.Text != "")
                 {
                     try
@@ -191,7 +191,31 @@ namespace SVModManager
 
         private void ApplyButton_Click(object sender, EventArgs e)
         {
-
+            var pathList = new List<string>();
+            foreach (ListViewItem mod in modListView.Items)
+            {
+                if (mod.Checked)
+                {
+                    pathList.Add(mod.SubItems[2].Text);
+                }
+            }
+            pathList.Reverse();
+            var res = MessageBox.Show("Modを適用しますか?", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.Yes)
+            {
+                foreach (var path in pathList)
+                {
+                    try
+                    {
+                        FileSystem.CopyDirectory(path, gameFolder.Text, UIOption.AllDialogs);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
+                }
+            }
         }
     }
 }
