@@ -26,7 +26,7 @@ namespace SVModManager
         private void Main_Load(object sender, EventArgs e)
         {
             // Mod適用先フォルダ
-            gameFolder.Text = Properties.Settings.Default.GameDirectory;
+            gameFolder.Text = Properties.Settings.Default.GameFolder;
             // Modリストの復元
             modList = XmlHelper.Deserialize<ModList>(@"ModList.xml");
             if (modList == null)
@@ -76,13 +76,13 @@ namespace SVModManager
             if (fbd.ShowDialog(this) == DialogResult.OK)
             {
                 gameFolder.Text = fbd.SelectedPath;
-                Properties.Settings.Default.GameDirectory = fbd.SelectedPath;
+                Properties.Settings.Default.GameFolder = fbd.SelectedPath;
             }
         }
 
         private void ModAddButton_Click(object sender, EventArgs e)
         {
-            var newModInfo = ModInfoForm.ShowModInfoForm();
+            var newModInfo = ModInfoForm.ShowModInfoForm("");
             if (newModInfo != null)
             {
                 string[] info = { "", newModInfo.ModName, newModInfo.ModFolder };
@@ -216,6 +216,34 @@ namespace SVModManager
                     }
                 }
             }
+        }
+
+        private void Main_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void ModListView_DragDrop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                return;
+            }
+            var dragFilePathArr = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            var newModInfo = ModInfoForm.ShowModInfoForm(dragFilePathArr[0]);
+            if (newModInfo != null)
+            {
+                string[] info = { "", newModInfo.ModName, newModInfo.ModFolder };
+                var item = new ListViewItem(info);
+                modListView.Items.Add(item);
+            }
+        }
+
+        private void ModListView_DragEnter(object sender, DragEventArgs e)
+        {
+            // ドラッグドロップ時にカーソルの形状を変更
+            e.Effect = DragDropEffects.All;
+
         }
     }
 }

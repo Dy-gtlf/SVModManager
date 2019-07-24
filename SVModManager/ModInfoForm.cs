@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,11 @@ namespace SVModManager
     {
         public ModInfo modInfo = new ModInfo();
 
-        public ModInfoForm()
+        public ModInfoForm(string path)
         {
             InitializeComponent();
+            modFolder.Text = path;
+            modName.Text = Path.GetFileName(path);
         }
 
         private void ModFolderButton_Click(object sender, EventArgs e)
@@ -58,9 +61,9 @@ namespace SVModManager
             Close();
         }
 
-        static public ModInfo ShowModInfoForm()
+        static public ModInfo ShowModInfoForm(string path)
         {
-            var modInfoForm = new ModInfoForm();
+            var modInfoForm = new ModInfoForm(path);
             modInfoForm.ShowDialog();
             var modInfo = modInfoForm.modInfo;
             return modInfo;

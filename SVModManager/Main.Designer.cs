@@ -45,6 +45,7 @@
             // 
             // modListView
             // 
+            this.modListView.AllowDrop = true;
             this.modListView.CheckBoxes = true;
             this.modListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Activation,
@@ -59,6 +60,8 @@
             this.modListView.TabIndex = 1;
             this.modListView.UseCompatibleStateImageBehavior = false;
             this.modListView.View = System.Windows.Forms.View.Details;
+            this.modListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ModListView_DragDrop);
+            this.modListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.ModListView_DragEnter);
             // 
             // Activation
             // 
@@ -89,13 +92,12 @@
             // 
             this.gameFolder.Location = new System.Drawing.Point(522, 41);
             this.gameFolder.Name = "gameFolder";
-            this.gameFolder.ReadOnly = true;
             this.gameFolder.Size = new System.Drawing.Size(110, 19);
             this.gameFolder.TabIndex = 3;
             // 
             // modAddButton
             // 
-            this.modAddButton.Location = new System.Drawing.Point(522, 124);
+            this.modAddButton.Location = new System.Drawing.Point(522, 179);
             this.modAddButton.Name = "modAddButton";
             this.modAddButton.Size = new System.Drawing.Size(110, 23);
             this.modAddButton.TabIndex = 4;
@@ -105,7 +107,7 @@
             // 
             // modDeleteButton
             // 
-            this.modDeleteButton.Location = new System.Drawing.Point(522, 153);
+            this.modDeleteButton.Location = new System.Drawing.Point(522, 208);
             this.modDeleteButton.Name = "modDeleteButton";
             this.modDeleteButton.Size = new System.Drawing.Size(110, 23);
             this.modDeleteButton.TabIndex = 5;
@@ -115,7 +117,7 @@
             // 
             // upButton
             // 
-            this.upButton.Location = new System.Drawing.Point(522, 182);
+            this.upButton.Location = new System.Drawing.Point(523, 237);
             this.upButton.Name = "upButton";
             this.upButton.Size = new System.Drawing.Size(35, 25);
             this.upButton.TabIndex = 6;
@@ -125,7 +127,7 @@
             // 
             // downButton
             // 
-            this.downButton.Location = new System.Drawing.Point(522, 213);
+            this.downButton.Location = new System.Drawing.Point(522, 270);
             this.downButton.Name = "downButton";
             this.downButton.Size = new System.Drawing.Size(35, 25);
             this.downButton.TabIndex = 7;
@@ -165,6 +167,7 @@
             // 
             // Main
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(650, 336);

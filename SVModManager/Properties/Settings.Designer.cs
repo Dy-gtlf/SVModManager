@@ -26,12 +26,12 @@ namespace SVModManager.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GameDirectory {
+        public string GameFolder {
             get {
-                return ((string)(this["GameDirectory"]));
+                return ((string)(this["GameFolder"]));
             }
             set {
-                this["GameDirectory"] = value;
+                this["GameFolder"] = value;
             }
         }
     }
